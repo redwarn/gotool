@@ -41,7 +41,7 @@ func NewEmail(from, subject, contentType, content, attach string, to, cc []strin
 }
 
 
-func NewClient(host, username, password string, port int, message *Email) *EmailClient {
+func NewEmailClient(host, username, password string, port int, message *Email) *EmailClient {
 	return &EmailClient{
 		Host:     host,
 		Port:     port,
@@ -51,7 +51,7 @@ func NewClient(host, username, password string, port int, message *Email) *Email
 	}
 }
 
-func (c *EmailClient) SendMsg() (bool, error) {
+func (c *EmailClient) SendMessage() (bool, error) {
 
 	e := gomail.NewDialer(c.Host, c.Port, c.Username, c.Password)
 	if 587 == c.Port {

@@ -3,13 +3,12 @@ package gotool
 import (
 	"encoding/json"
 	"fmt"
-
 	"github.com/levigross/grequests"
 	"github.com/tidwall/gjson"
 )
 
 var (
-	WeiXinErr = func(code int64, msg string) error {
+	WXErr = func(code int64, msg string) error {
 		return fmt.Errorf("wx return error,code: %d, msg: %s", code, msg)
 	}
 )
@@ -20,37 +19,37 @@ const (
 )
 
 type (
-	Text struct {
+	WXText struct {
 		Content string `json:"content"`
 	}
 
-	TextCard struct {
+	WXTextCard struct {
 		Title       string `json:"title"`
 		Description string `json:"description"`
 		URL         string `json:"url"`
 		BtnTxt      string `json:"btntxt"`
 	}
 
-	Message struct {
+	WXMessage struct {
 		MsgType  string    `json:"msgtype"`
 		ToUser   string    `json:"touser"`
 		ToTag    string    `json:"totag"`
 		ToParty  string    `json:"toparty"`
 		AgentId  int64     `json:"agentid"`
 		Safe     int64     `json:"safe"`
-		Text     *Text     `json:"text"`
-		TextCard *TextCard `json:"textcard"`
+		Text     *WXText     `json:"text"`
+		TextCard *WXTextCard `json:"textcard"`
 	}
-	Client struct {
+	WXClient struct {
 		TokenAPIURL string
 		ApiURL      string
 		CorpID      string
 		CorpSecret  string
-		Message     *Message
+		Message     *WXMessage
 	}
 )
 
-func (c *Client) GetToken() (string, error) {
+func (c *WXClient) GetToken() (string, error) {
 	params := &grequests.RequestOptions{
 		Params: map[string]string{
 			"corpid":     c.CorpID,
@@ -68,10 +67,10 @@ func (c *Client) GetToken() (string, error) {
 	if code.Int() == 0 {
 		return token.String(), nil
 	}
-	return "", WeiXinErr(code.Int(), gjson.Get(res, "errmsg").String())
+	return "", WXErr(code.Int(), gjson.Get(res, "errmsg").String())
 }
 
-func (c *Client) SendMessage() (bool, error) {
+func (c *WXClient) SendMessage() (bool, error) {
 	data, err := json.Marshal(c.Message)
 	if err != nil {
 		return false, err
@@ -99,5 +98,5 @@ func (c *Client) SendMessage() (bool, error) {
 	if code.Int() == 0 {
 		return true, nil
 	}
-	return false, WeiXinErr(code.Int(), gjson.Get(resJson, "errmsg").String())
+	return false, WXErr(code.Int(), gjson.Get(resJson, "errmsg").String())
 }

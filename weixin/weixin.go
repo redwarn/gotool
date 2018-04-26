@@ -1,4 +1,4 @@
-package gotool
+package weixin
 
 import (
 	"encoding/json"
@@ -19,37 +19,37 @@ const (
 )
 
 type (
-	WXText struct {
+	Text struct {
 		Content string `json:"content"`
 	}
 
-	WXTextCard struct {
+	TextCard struct {
 		Title       string `json:"title"`
 		Description string `json:"description"`
 		URL         string `json:"url"`
 		BtnTxt      string `json:"btntxt"`
 	}
 
-	WXMessage struct {
+	Message struct {
 		MsgType  string    `json:"msgtype"`
 		ToUser   string    `json:"touser"`
 		ToTag    string    `json:"totag"`
 		ToParty  string    `json:"toparty"`
 		AgentId  int64     `json:"agentid"`
 		Safe     int64     `json:"safe"`
-		Text     *WXText     `json:"text"`
-		TextCard *WXTextCard `json:"textcard"`
+		Text     *Text     `json:"text"`
+		TextCard *TextCard `json:"textcard"`
 	}
-	WXClient struct {
+	Client struct {
 		TokenAPIURL string
 		ApiURL      string
 		CorpID      string
 		CorpSecret  string
-		Message     *WXMessage
+		Message     *Message
 	}
 )
 
-func (c *WXClient) GetToken() (string, error) {
+func (c *Client) GetToken() (string, error) {
 	params := &grequests.RequestOptions{
 		Params: map[string]string{
 			"corpid":     c.CorpID,
@@ -70,7 +70,7 @@ func (c *WXClient) GetToken() (string, error) {
 	return "", WXErr(code.Int(), gjson.Get(res, "errmsg").String())
 }
 
-func (c *WXClient) SendMessage() (bool, error) {
+func (c *Client) SendMessage() (bool, error) {
 	data, err := json.Marshal(c.Message)
 	if err != nil {
 		return false, err

@@ -1,4 +1,4 @@
-package gotool
+package email
 
 
 import (
@@ -18,7 +18,7 @@ type (
 	Attach      string
 	}
 
-	EmailClient struct {
+	Client struct {
 	Host     string
 	Port     int
 	Username string
@@ -41,8 +41,8 @@ func NewEmail(from, subject, contentType, content, attach string, to, cc []strin
 }
 
 
-func NewEmailClient(host, username, password string, port int, message *Email) *EmailClient {
-	return &EmailClient{
+func NewEmailClient(host, username, password string, port int, message *Email) *Client {
+	return &Client{
 		Host:     host,
 		Port:     port,
 		Username: username,
@@ -51,7 +51,7 @@ func NewEmailClient(host, username, password string, port int, message *Email) *
 	}
 }
 
-func (c *EmailClient) SendMessage() (bool, error) {
+func (c *Client) SendMessage() (bool, error) {
 
 	e := gomail.NewDialer(c.Host, c.Port, c.Username, c.Password)
 	if 587 == c.Port {

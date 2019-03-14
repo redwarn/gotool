@@ -1,4 +1,4 @@
-package http
+package httpclient
 
 import (
 	"bytes"
@@ -46,12 +46,12 @@ func requestError(err error) ResData {
 	return ResData{0, []byte(errorMessage)}
 }
 
-func Get(url string, timeout int64) ResData {
+func Get(url string, timeout int64, token string) ResData {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return requestError(err)
 	}
-	return request(req, timeout, "")
+	return request(req, timeout, token)
 }
 
 func Request(url, method, body, contentType, token string) ResData {

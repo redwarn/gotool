@@ -70,11 +70,6 @@ func PostParams(url, token string, data map[string]string) ResData {
 	return Request(url, "POST", body, "application/x-www-form-urlencoded", token)
 }
 
-func PostJson(url, token string, data map[string]string) ResData {
-	body := generateUrlData(data)
-	return Request(url, "POST", body, "application/json", token)
-}
-
 func generateUrlData(data map[string]string) string {
 	var urlData string
 	for k, v := range data {

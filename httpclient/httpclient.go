@@ -65,9 +65,14 @@ func Request(url, method, body, contentType, token string) ResData {
 	return request(req, 60, token)
 }
 
-func PostParams(url,token string,data map[string]string) ResData {
+func PostParams(url, token string, data map[string]string) ResData {
 	body := generateUrlData(data)
-	return Request(url,"POST",body,"application/x-www-form-urlencoded",token)
+	return Request(url, "POST", body, "application/x-www-form-urlencoded", token)
+}
+
+func PostJson(url, token string, data map[string]string) ResData {
+	body := generateUrlData(data)
+	return Request(url, "POST", body, "application/json", token)
 }
 
 func generateUrlData(data map[string]string) string {

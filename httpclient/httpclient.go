@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	Url "net/url"
 	"strings"
 	"time"
 )
@@ -52,6 +53,18 @@ func Get(url string, timeout int64, token string) ResData {
 		return requestError(err)
 	}
 	return request(req, timeout, token)
+}
+
+func PostForm(url, token string, body map[string]string) ResData {
+	v := Url.Values{}
+	for key, value := range body {
+		v.Set(key, value)
+	}
+	return Request(url, "POST", v.Encode(), "application/x-www-form-urlencoded", token)
+}
+
+func PostJson(url, token, body string) ResData {
+	return Request(url, "POST", body, "application/json", token)
 }
 
 func Request(url, method, body, contentType, token string) ResData {

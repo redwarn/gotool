@@ -55,7 +55,7 @@ func Get(url string, timeout int64, token string) ResData {
 	return request(req, timeout, token)
 }
 
-func PostForm(url, token string, body map[string]string) ResData {
+func PostParams(url, token string, body map[string]string) ResData {
 	v := Url.Values{}
 	for key, value := range body {
 		v.Set(key, value)
@@ -76,17 +76,4 @@ func Request(url, method, body, contentType, token string) ResData {
 	}
 	req.Header.Set("Content-type", contentType)
 	return request(req, 60, token)
-}
-
-func PostParams(url, token string, data map[string]string) ResData {
-	body := generateUrlData(data)
-	return Request(url, "POST", body, "application/x-www-form-urlencoded", token)
-}
-
-func generateUrlData(data map[string]string) string {
-	var urlData string
-	for k, v := range data {
-		urlData = urlData + fmt.Sprintf("%s=%s&", k, v)
-	}
-	return urlData
 }

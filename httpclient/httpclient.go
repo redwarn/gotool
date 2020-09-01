@@ -8,6 +8,7 @@ import (
 	Url "net/url"
 	"strings"
 	"time"
+	"github.com/godblesshugh/form"
 )
 
 type ResData struct {
@@ -67,6 +68,14 @@ func PostJson(url, token, body string) ResData {
 	return Request(url, "POST", body, "application/json", token)
 }
 
+
+func PostForm(url, token string, data map[string]interface{}) ResData {
+	formData, err := form.EncodeToString(data)
+	if err != nil {
+		return requestError(err)
+	}
+	return Request(url, "POST", formData, "application/x-www-form-urlencoded", token)
+}
 func Request(url, method, body, contentType, token string) ResData {
 
 	buf := bytes.NewBufferString(body)

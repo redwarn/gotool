@@ -1,0 +1,23 @@
+# github.com/godblesshugh/form v0.0.0-20190322082530-a30cb8ffe3dc
+## explicit
+github.com/godblesshugh/form
+# github.com/google/go-querystring v1.0.0
+github.com/google/go-querystring/query
+# github.com/levigross/grequests v0.0.0-20190908174114-253788527a1a
+## explicit
+github.com/levigross/grequests
+# github.com/tidwall/gjson v1.6.1
+## explicit
+github.com/tidwall/gjson
+# github.com/tidwall/match v1.0.1
+github.com/tidwall/match
+# github.com/tidwall/pretty v1.0.2
+github.com/tidwall/pretty
+# golang.org/x/net v0.0.0-20181011144130-49bb7cea24b1
+golang.org/x/net/publicsuffix
+# gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc
+## explicit
+gopkg.in/alexcesaro/quotedprintable.v3
+# gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
+## explicit
+gopkg.in/gomail.v2
